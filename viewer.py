@@ -117,9 +117,9 @@ class Viewer:
             self.key_forward()
         elif kp == "d" or kp == "w" or kp == "Right" or kp == "Up":
             self.key_back()
-        elif kp == "q" or kp == ",":
+        elif kp == "q" or kp == "comma":
             self.key_forward_adjust()
-        elif kp == "e" or kp == ".":
+        elif kp == "e" or kp == "period":
             self.key_back_adjust()
         elif kp == "j":
             self.key_jump()
