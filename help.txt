@@ -1,0 +1,21 @@
+Controls for viewer:
+    j to jump to a new page
+    Escape to exit
+    righty:
+        Move forward a page
+            a or s
+        Move back a page
+            w or d
+        Adjust forward
+            q
+        Adjust back
+            e
+    lefty:
+        Move forward a page
+            Left or Down
+        Move back a page
+            Right or Up
+        Adjust forward
+            Comma
+        Adjust back
+            Period
