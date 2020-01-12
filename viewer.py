@@ -3,14 +3,32 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 import random
 
+"""
+Class for a viewer object which shows images in manga format.
+"""
+
 
 def clear_image_array(array):
+    """
+    destroy every item in an array
+    :param array: array of tkinter elements
+    :return: nothing
+    """
     for i in array:
         i.destroy()
 
 
 class Viewer:
     def __init__(self, dictionary, timer=None):
+        """
+        initialize variables
+        :param dictionary: array of images to display
+        :param timer: how many milliseconds between color switches
+        n is page number
+        image_array is array of PIL image objects
+        app is tk object
+        clear_array is the array items are added to in order to be destroyed next pageflip
+        """
         self.n = 0
         self.dict = dictionary
         self.image_array = []
@@ -19,6 +37,9 @@ class Viewer:
         self.timer = timer
 
     def start(self):
+        """
+        call this to start a viewer
+        """
         self.app.bind("<Key>", self.key)
         self.app.attributes("-fullscreen", True)
         self.app["bg"] = "Black"
@@ -30,6 +51,9 @@ class Viewer:
         self.app.mainloop()
 
     def fill_image_array(self):
+        """
+        load images and put them in the array of loaded PIL objects
+        """
         for i in self.dict:
             print(i)
             if i is None:
@@ -80,6 +104,10 @@ class Viewer:
         return img
 
     def jump_callback(self, page_number):
+        """
+        go to a page callback function and logic
+        :param page_number: the page to go to
+        """
         try:
             page_number = int(page_number.get())
             if page_number % 2 == 0 and page_number != 0:
@@ -92,6 +120,9 @@ class Viewer:
             print("NaN")
 
     def query_jump(self):
+        """
+        load gui elements for jumping to a page
+        """
         popup = tk.Label(self.app, anchor="center")
         jump_text = tk.Label(popup, text="Jump to what page?")
         self.clear_array += [popup]
@@ -104,6 +135,9 @@ class Viewer:
         popup.pack()
 
     def display_image_pair(self):
+        """
+        logic for displaying an image pair
+        """
         n = self.n
         m = n + 1
         try:
@@ -120,11 +154,18 @@ class Viewer:
             pass
 
     def swap_color(self):
+        """
+        change the background color to a new random color
+        """
         hex_number = "#%0.6x" % random.randint(0, 16777215)
         self.app.configure(background=hex_number)
         self.app.after(self.timer, self.swap_color)
 
     def key(self, event):
+        """
+        callback for keypress event. see help for controls.
+        :param event: what key was pressed?
+        """
         kp = event.keysym
         print(kp)
         if kp == "Escape":
@@ -141,6 +182,9 @@ class Viewer:
             self.key_jump()
 
     def key_forward(self, event=None):
+        """
+        move forward a page. key action.
+        """
         clear_array = self.clear_array
         self.clear_array = []
         if self.n <= len(self.dict) - 3:
@@ -149,6 +193,9 @@ class Viewer:
         clear_image_array(clear_array)
 
     def key_forward_adjust(self, event=None):
+        """
+        move forward half a page. key action.
+        """
         clear_array = self.clear_array
         self.clear_array = []
         if self.n <= len(self.dict) - 1:
@@ -157,6 +204,9 @@ class Viewer:
         clear_image_array(clear_array)
 
     def key_back(self, event=None):
+        """
+        move back a page. key action.
+        """
         clear_array = self.clear_array
         self.clear_array = []
         if self.n >= 2:
@@ -165,6 +215,9 @@ class Viewer:
         clear_image_array(clear_array)
 
     def key_back_adjust(self, event=None):
+        """
+        move back half a page. key action.
+        """
         clear_array = self.clear_array
         self.clear_array = []
         if self.n >= 1:
@@ -173,7 +226,13 @@ class Viewer:
         clear_image_array(clear_array)
 
     def key_jump(self, event=None):
+        """
+        jump to a new page. key action.
+        """
         self.query_jump()
 
     def key_quit(self, event=None):
+        """
+        quit the app. key action.
+        """
         self.app.destroy()

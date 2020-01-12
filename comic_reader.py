@@ -25,6 +25,11 @@ comic_reader.py
 
 
 def parseargs(cmds):
+    """
+    simple sysargv parsing
+    :param cmds: args when called
+    :return: list of relevant args
+    """
     domain = ""
     path = ""
     number = ""
@@ -40,10 +45,20 @@ def parseargs(cmds):
 
 
 def url_builder(cmdlist):
+    """
+    make a url out of 3 cmds
+    :param cmdlist: list of commands
+    :return: url
+    """
     return "https://" + cmdlist[0] + cmdlist[1] + cmdlist[2]
 
 
 def download_image(url):
+    """
+    download a single image
+    :param url: image to download
+    :return: name of file
+    """
     file_name = "images/" + url.replace(":", "")
     folder_name = file_name[:file_name.rfind("/")]
     file_exists = os.path.isfile(file_name)
@@ -54,40 +69,18 @@ def download_image(url):
         urllib.request.urlretrieve(url, file_name)
     return file_name
 
-#
-# def download_images_recur(url, accum_page_number=0, flag=True, dict={}):
-#     '''
-#     tail recursively download all images
-#     :param url: url for comic
-#     :param accum_page_number: the page number to download
-#     :param flag: was last page not a double?
-#     :param dict: a dictionary of all page numbers to their file names
-#     :return: a dictionary of all page numbers to their file names
-#     '''
-#     try:
-#         current_url = url + "/" + str(accum_page_number) + ".jpg"
-#         current_file = download_image(current_url)
-#         print(current_file)
-#         dict[accum_page_number] = current_file
-#         return download_images(url, accum_page_number+1, True)
-#     except (urllib.error.HTTPError, urllib.error.URLError):
-#         try:
-#             current_url = url + "/" + str(accum_page_number) + ".png"
-#             current_file = download_image(current_url)
-#             print(current_file)
-#             dict[accum_page_number] = current_file
-#             return download_images(url, accum_page_number+1, True)
-#         except (urllib.error.HTTPError, urllib.error.URLError):
-#             if flag:
-#                 dict[accum_page_number] = None
-#                 return download_images(url, accum_page_number+1, False)
-#             else:
-#                 print("reached end")
-#                 return dict
-#
-
 
 def download_images(url, dict=[], double_flag=True, done_flag=True, page_num=0, image_type=".jpg"):
+    """
+    download images sequentially
+    :param url: base url
+    :param dict: array of images
+    :param double_flag: was last a double?
+    :param done_flag: are we not done?
+    :param page_num: number at end of url
+    :param image_type: png or jpg?
+    :return: array of images
+    """
     while done_flag:
         try:
             current_url = url + "/" + str(page_num) + image_type
