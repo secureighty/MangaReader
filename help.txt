@@ -1,7 +1,7 @@
 Controls for viewer:
     j to jump to a new page
     Escape to exit
-    righty:
+    lefty:
         Move forward a page
             a or s
         Move back a page
@@ -10,7 +10,7 @@ Controls for viewer:
             q
         Adjust back
             e
-    lefty:
+    righty:
         Move forward a page
             Left or Down
         Move back a page
