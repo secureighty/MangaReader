@@ -79,13 +79,29 @@ class Viewer:
         img.place(x=xpos, y=0)
         return img
 
+    def jump_callback(self, page_number):
+        try:
+            page_number = int(page_number.get())
+            if page_number % 2 == 0 and page_number != 0:
+                self.n = page_number
+            else:
+                self.n = page_number - 1
+            clear_image_array(self.clear_array)
+            self.display_image_pair()
+        except ValueError:
+            print("NaN")
+
     def query_jump(self):
-        jump_text = tk.Label(self.app, text="Jump to what page?")
-        self.clear_array += [jump_text]
-        jump_text.place(x=0, y=0)
+        popup = tk.Label(self.app, anchor="center")
+        jump_text = tk.Label(popup, text="Jump to what page?")
+        self.clear_array += [popup]
+        jump_text.pack()
         input_text = tk.StringVar()
-        entry = ttk.Entry(jump_text, textvariable=input_text)
+        entry = ttk.Entry(popup, textvariable=input_text)
+        entry.bind("<Return>", lambda event: self.jump_callback(page_number=input_text))
         entry.pack()
+        entry.focus_set()
+        popup.pack()
 
     def display_image_pair(self):
         n = self.n
