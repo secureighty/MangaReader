@@ -54,13 +54,50 @@ class Viewer:
         """
         load images and put them in the array of loaded PIL objects
         """
+        double_flag = False
         for i in self.dict:
             print(i)
-            if i is None:
-                self.image_array += [None]
+            load = Image.open(i)
+            width, height = load.size
+            """
+            ngl, this bit of logic is a little cursed but it works.
+            basically, if there's an image that's supposed to be a double,
+            first check if it's even or odd, then add None padding to keep
+            it within its even/odd status. Should also make the images to 
+            the front and back of the double, doubles. If there are more
+            doubles, don't add extra padding on all after the first.
+            """
+            if width > height:
+                if double_flag:
+                    # previous None
+                    self.image_array += [load]
+
+                    self.image_array += [None]
+                    # image after double
+                elif len(self.image_array) % 2 == 0:
+                    # image pair
+                    # image pair
+
+                    self.image_array += [load]
+                    self.image_array += [None]
+
+                    self.image_array += [None]
+                    # image after double
+                else:
+                    # image before double
+                    self.image_array += [None]
+
+                    self.image_array += [load]
+                    self.image_array += [None]
+
+                    self.image_array += [None]
+                    # image after double
+                double_flag = True
             else:
-                load = Image.open(i)
                 self.image_array += [load]
+                double_flag = False
+
+        print(self.image_array)
 
     def display_image(self, load, panel_number=0):
         '''
@@ -187,7 +224,7 @@ class Viewer:
         """
         clear_array = self.clear_array
         self.clear_array = []
-        if self.n <= len(self.dict) - 3:
+        if self.n <= len(self.image_array) - 3:
             self.n += 2
         self.display_image_pair()
         clear_image_array(clear_array)
@@ -198,7 +235,7 @@ class Viewer:
         """
         clear_array = self.clear_array
         self.clear_array = []
-        if self.n <= len(self.dict) - 1:
+        if self.n <= len(self.image_array) - 1:
             self.n += 1
         self.display_image_pair()
         clear_image_array(clear_array)
