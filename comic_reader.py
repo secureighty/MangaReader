@@ -1,6 +1,7 @@
 import sys
 import os
 import urllib.request
+from random import choice
 
 from viewer import Viewer
 
@@ -22,6 +23,13 @@ comic_reader.py
     --number <comic number>
 
 """
+
+user_agents = [
+    'Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11',
+    'Mozilla/5.0 (compatible; Konqueror/3.5; Linux) KHTML/3.5.5 (like Gecko) (Kubuntu)',
+    'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.12) Gecko/20070731 Ubuntu/dapper-security Firefox/1.5.0.12',
+]
+
 
 
 def parseargs(cmds):
@@ -66,7 +74,10 @@ def download_image(url):
     if not file_exists:
         if not folder_exists:
             os.makedirs(folder_name)
-        urllib.request.urlretrieve(url, file_name)
+        req = urllib.request.Request(url, headers={'User-Agent' : choice(user_agents)})
+        response = urllib.request.urlopen(req).read()
+        file_obj = os.open(file_name, os.O_RDWR|os.O_CREAT)
+        os.write(file_obj, response)
     return file_name
 
 
