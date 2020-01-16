@@ -68,7 +68,7 @@ class Viewer:
             doubles, don't add extra padding on all after the first.
             """
             if width > height:
-                if double_flag:
+                if double_flag or len(self.image_array) == 0:
                     # previous None
                     self.image_array += [load]
 
