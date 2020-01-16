@@ -167,6 +167,7 @@ class Viewer:
         input_text = tk.StringVar()
         entry = ttk.Entry(popup, textvariable=input_text)
         entry.bind("<Return>", lambda event: self.jump_callback(page_number=input_text))
+        entry.bind("<KP_Enter>", lambda event: self.jump_callback(page_number=input_text))
         entry.pack()
         entry.focus_set()
         popup.pack()
