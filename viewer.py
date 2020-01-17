@@ -97,8 +97,6 @@ class Viewer:
                 self.image_array += [load]
                 double_flag = False
 
-        print(self.image_array)
-
     def display_image(self, load, panel_number=0):
         '''
         display image on screen

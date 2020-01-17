@@ -30,17 +30,17 @@ def download_image(url):
     return file_name
 
 
-def download_images(url, arr=[], double_flag=True, done_flag=True, page_num=0, image_type=".jpg"):
+def download_images(url):
     """
     download images sequentially
     :param url: base url
-    :param arr: array of images
-    :param double_flag: was last a double?
-    :param done_flag: are we not done?
-    :param page_num: number at end of url
-    :param image_type: png or jpg?
     :return: array of images
     """
+    arr = []
+    double_flag = True
+    done_flag = True
+    page_num = 0
+    image_type = ".jpg"
     while done_flag:
         try:
             current_url = url + "/" + str(page_num) + image_type
@@ -72,7 +72,7 @@ def download_images(url, arr=[], double_flag=True, done_flag=True, page_num=0, i
 
 
 class Downloader:
-    def __init__(self, cmdlist=[]):
+    def __init__(self, cmdlist):
         self.cmdlist = cmdlist
         self.page_arr = None
 
