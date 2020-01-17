@@ -114,7 +114,6 @@ def download_images(url, dict=[], double_flag=True, done_flag=True, page_num=0, 
                 double_flag = True
             except (urllib.error.HTTPError, urllib.error.URLError):
                 if double_flag:
-                    dict += [None]
                     page_num += 1
                     double_flag = False
                 else:
