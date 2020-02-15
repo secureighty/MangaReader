@@ -72,8 +72,8 @@ def download_images(url):
 
 
 class Downloader:
-    def __init__(self, cmdlist):
-        self.cmdlist = cmdlist
+    def __init__(self, cmddict):
+        self.cmddict = cmddict
         self.page_arr = None
 
     def download(self):
@@ -85,5 +85,5 @@ class Downloader:
         :param cmdlist: list of commands
         :return: url
         """
-        return "https://" + self.cmdlist[0] + self.cmdlist[1] + self.cmdlist[2]
+        return "https://" + self.cmddict.get("domain") + self.cmddict.get("path") + str(self.cmddict.get("number"))
 
