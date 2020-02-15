@@ -1,0 +1,8 @@
+#MangaReader's config file.
+
+#domain: <domain specifically for images (i.whatever.net)>
+domain: ""
+#path: <path after domain (/galleries/)>
+path: ""
+#number: <comic number used by some hosting sites as a chapter identifier, and by others as comic identifier> optional.
+number: ""
