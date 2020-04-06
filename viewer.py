@@ -40,6 +40,7 @@ class Viewer:
         """
         call this to start a viewer
         """
+        self.app.title("MangaReader by Alphactory")
         self.app.bind("<Key>", self.key)
         self.app.attributes("-fullscreen", True)
         self.app["bg"] = "Black"
@@ -96,6 +97,8 @@ class Viewer:
             else:
                 self.image_array += [load]
                 double_flag = False
+        if len(self.image_array) % 2 == 1:
+            self.image_array += [None]
 
     def display_image(self, load, panel_number=0):
         '''
