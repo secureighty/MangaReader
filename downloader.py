@@ -86,4 +86,3 @@ class Downloader:
         :return: url
         """
         return "https://" + self.cmddict.get("domain") + self.cmddict.get("path") + str(self.cmddict.get("number"))
-

@@ -58,7 +58,7 @@ class Viewer:
         double_flag = False
         for i in self.dict:
             print(i)
-            load = Image.open(i)
+            load = Image.open(i).convert("RGB")
             width, height = load.size
             """
             ngl, this bit of logic is a little cursed but it works.
