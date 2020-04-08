@@ -53,9 +53,20 @@ def parseargs(cmds):
 def pull_from_config(file_location="config.yaml"):
     if os.path.isfile(file_location):
         with open(file_location) as file:
-            return yaml.load(file, Loader=yaml.FullLoader)
+            result = yaml.load(file, Loader=yaml.FullLoader)
+            if result == "{'domain': '', path: '', number: ''}" or result is None:
+                print("Config file improperly configured or empty. For future use, add a valid Config.yaml or use arguments.")
+                return make_fast_config()
+            return result
     else:
-        print("Missing config file. Add a valid Config.yaml or use arguments.")
+        print("Missing config file. For future use, add a valid Config.yaml or use arguments.")
+        return make_fast_config()
+
+
+def make_fast_config():
+    print("Enter a link to a comic (minus the image itself)")
+    link = input("i.e. i.comics.com/comicname/comicnumber/1.jpg becomes i.comics.com/comicname/comicnumber/ \n")
+    return {'domain': link, 'path': '', 'number': ''}
 
 
 def main():
