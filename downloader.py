@@ -1,11 +1,9 @@
 import os
-import urllib.request
+import requests
 from random import choice
 
 user_agents = [
-    'Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11',
-    'Mozilla/5.0 (compatible; Konqueror/3.5; Linux) KHTML/3.5.5 (like Gecko) (Kubuntu)',
-    'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.12) Gecko/20070731 Ubuntu/dapper-security Firefox/1.5.0.12',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)'
 ]
 
 
@@ -22,8 +20,10 @@ def download_image(url):
     if not file_exists:
         if not folder_exists:
             os.makedirs(folder_name)
-        req = urllib.request.Request(url, headers={'User-Agent': choice(user_agents)})
-        response = urllib.request.urlopen(req).read()
+        req = requests.get(url, headers={'User-Agent': choice(user_agents)})
+        if req.status_code == 404:
+            raise FileNotFoundError
+        response = req.content
         file_obj = open(file_name, "wb")
         file_obj.write(response)
         file_obj.close()
@@ -49,19 +49,20 @@ def download_images(url):
             arr += [current_file]
             page_num += 1
             double_flag = True
-        except (urllib.error.HTTPError, urllib.error.URLError):
+        except (FileNotFoundError):
             try:
                 if image_type == ".jpg":
                     image_type = ".png"
                 else:
                     image_type = ".jpg"
                 current_url = url + "/" + str(page_num) + image_type
+                print("trying:"+current_url)
                 current_file = download_image(current_url)
                 print(current_file)
                 arr += [current_file]
                 page_num += 1
                 double_flag = True
-            except (urllib.error.HTTPError, urllib.error.URLError):
+            except (FileNotFoundError):
                 if double_flag:
                     page_num += 1
                     double_flag = False
