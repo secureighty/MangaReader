@@ -134,7 +134,7 @@ class Viewer:
         else:
             print("invalid panel number")
             exit()
-        load = load.resize((int(new_width), int(new_height)), Image.ANTIALIAS)
+        load = load.resize((int(new_width), int(new_height)), Image.LANCZOS)
         render = ImageTk.PhotoImage(load)
         img = tk.Label(self.app, image=render)
         img.image = render
