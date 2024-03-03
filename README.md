@@ -6,6 +6,7 @@ Make sure you have python, pip, and git on your computer and in your path.
 In your terminal,
   ```bash
   git clone https://github.com/alphactory/mangareader
+  cd mangareader
   pip install -r requirements.txt
   ```
 Edit config.yaml with the asked fields for an online comic whose images are iterable (i.e. domain/path/1.jpg, 2.jpg, etc) and run 
